@@ -9,7 +9,7 @@ void DispResult(int* n) {
     //ƒ‰ƒ“ƒ_ƒ€
     srand(time(nullptr));
 
-    printf("%d•b‘Ò‚Á‚ÄÀs‚³‚ê‚½‚æ\n", *n);
+    printf("3•b‘Ò‚Á‚ÄÀs‚³‚ê‚½‚æ\n");
 
     int getRand = rand();
 
