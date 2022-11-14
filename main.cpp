@@ -9,7 +9,7 @@ int RecursiveSalary(int n) {
 	}
 	return (RecursiveSalary(n - 1) * 2 - 50);
 }
-
+ 
 int main() {
 
 	int generalSalary = 0;
