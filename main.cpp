@@ -1,26 +1,27 @@
 #include <stdio.h>
 
-int RecursiveSalary(int n) {
-	const int general = 100;
-	if (n == 1) {
+template <typename T>
+T Min(T a, T b) {
 
-		return general;
-		
+	if (a >= b) {
+
+		return b;
 	}
-	return (RecursiveSalary(n - 1) * 2 - 50);
+	return a;
 }
- 
+
+template<>
+char Min(char a, char b) {
+	printf("数字以外は代入できません");
+	return 0;
+}
+
 int main() {
 
-	int generalSalary = 0;
-	int recursiveSalary = 0;
-	for (int i = 1; i < 9; i++) {
-		generalSalary += 1072;
-		recursiveSalary += RecursiveSalary(i);
-
-		printf("一般的な賃金 : %d\n ", generalSalary);
-		printf("再帰的な賃金 : %d\n ", recursiveSalary);
-	}
+	printf("%d\n", Min<int>(1, 2));
+	printf("%f\n", Min<float>(1.0f, 2.0f));
+	printf("lf%\n", Min<double>(1.11, 2.22));
+	printf("%c\n", Min<char>('A', 'B'));
 
 	return 0;
 }
