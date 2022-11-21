@@ -3,47 +3,60 @@
 #include<windows.h>
 #include<time.h>
 
-typedef void (*PFunc)(int *);
-//コールバック関数
-void DispResult(int* n) {
-    //ランダム
-    srand(time(nullptr));
+typedef void (*PFunc)(int*, int*);
 
-    printf("3秒待って実行されたよ\n");
+void setTimerout(PFunc p, int second, int number) {
+	//コールバック関数を呼び出す
+	Sleep(second * 1000);
 
-    int getRand = rand();
-
-    getRand = getRand % 2;
-
-    if (getRand % 2 == *n) {
-        printf("アタリ\n");
-    }
-    else
-    {
-        printf("ハズレ\n");
-    }
+	p(&second, &number);
 }
 
-void setTimerout(PFunc p, int second ,int number) {
-    //コールバック関数を呼び出す
-    Sleep(second * 1000);
+//コールバック関数
+void DispResult(int* second, int* number) {
+	//ランダム
+	srand(time(nullptr));
 
-    p(&number);
+	printf("3秒待って実行されたよ\n");
+
+	int getRand = rand();
+
+	getRand = getRand % 2;
+	//奇数の場合
+	if (*number == 1) {
+		if (getRand % 2 == 1) {
+			printf("アタリ\n%dが抽選で選ばれました\n", getRand);
+		}
+		else {
+			printf("ハズレ\n%dが抽選で選ばれました\n", getRand);
+		}
+	}
+
+	//偶数の場合
+	else if (*number == 2) {
+		if (getRand % 2 == 0) {
+			printf("アタリ\n%dが抽選で選ばれました\n", getRand);
+		}
+		else {
+			printf("ハズレ\n%dが抽選で選ばれました\n", getRand);
+		}
+	}
 }
 
 int main() {
 
-    int player = 0;
+	int number = 0;
+	//数字の入力
+	printf("半なら1、丁なら2を入力してください\n");
+	scanf_s("%d", &number);
 
-    int number = 0;
-    //数字の入力
-    printf("半なら奇数、丁なら偶数を入力してください\n");
-    scanf_s("%d", &player);
+	PFunc p;
 
-    PFunc p;
+	p = DispResult;
 
-    p = DispResult;
+	setTimerout(p, 3, number);
 
-    setTimerout(p, 3 , number);
-    return 0;
+	system("pause");
+	return 0;
 }
+
