@@ -1,62 +1,72 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<windows.h>
-#include<time.h>
+#include <stdio.h>
+#include <stdlib.h>
 
-typedef void (*PFunc)(int*, int*);
+//単方向リストの構造体の定義
+typedef struct cell
+{
+	int val;
+	struct cell* next;
+}CELL;
 
-void setTimerout(PFunc p, int second, int number) {
-	//コールバック関数を呼び出す
-	Sleep(second * 1000);
+void Create(CELL* currentCell, int val);
+void Index(CELL* head);
 
-	p(&second, &number);
-}
+int main()
+{
 
-//コールバック関数
-void DispResult(int* second, int* number) {
-	//ランダム
-	srand(time(nullptr));
+	int val;
 
-	printf("3秒待って実行されたよ\n");
+	//先頭のセルを宣言
+	CELL head;
+	head.next = nullptr;
 
-	int getRand = rand();
+	while (true)
+	{
+		printf("数字を入力してください\n");
 
-	getRand = getRand % 2;
-	//奇数の場合
-	if (*number == 1) {
-		if (getRand % 2 == 1) {
-			printf("アタリ\n%dが抽選で選ばれました\n", getRand);
-		}
-		else {
-			printf("ハズレ\n%dが抽選で選ばれました\n", getRand);
-		}
+		scanf_s("%d", &val);
+
+		//最後尾にリストを追加
+		Create(&head, val);
+
+		//リスト一覧の表示
+		Index(&head);
 	}
-
-	//偶数の場合
-	else if (*number == 2) {
-		if (getRand % 2 == 0) {
-			printf("アタリ\n%dが抽選で選ばれました\n", getRand);
-		}
-		else {
-			printf("ハズレ\n%dが抽選で選ばれました\n", getRand);
-		}
-	}
-}
-
-int main() {
-
-	int number = 0;
-	//数字の入力
-	printf("半なら1、丁なら2を入力してください\n");
-	scanf_s("%d", &number);
-
-	PFunc p;
-
-	p = DispResult;
-
-	setTimerout(p, 3, number);
-
-	system("pause");
 	return 0;
 }
 
+
+//セルを新規作成する関数
+void Create(CELL* currentCell, int val)
+{
+	CELL* newCell;
+
+	//新規作成するセル分のメモリを確保する
+	newCell = (CELL*)malloc(sizeof(CELL));
+
+	if (newCell)
+	{
+		newCell->val = val;
+		newCell->next = nullptr;
+	}
+
+	//最後(最新)のセルのアドレスの1つ目の処理は引数から持ってきた
+	//リストのうち最初のセルのアドレスが該当する
+	while (currentCell->next != nullptr)
+	{
+		currentCell = currentCell->next;
+	}
+
+	currentCell->next = newCell;
+}
+
+void Index(CELL* head)
+{
+	printf("{");
+	while (head->next != nullptr)
+	{
+		head = head->next;
+		printf("%d,", head->val);
+	}
+	printf("}\n\n");
+}
