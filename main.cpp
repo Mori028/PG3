@@ -1,62 +1,57 @@
-#include<stdio.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 #include<windows.h>
-#include<time.h>
-
-typedef void (*PFunc)(int*, int*);
-
-void setTimerout(PFunc p, int second, int number) {
-	//コールバック関数を呼び出す
-	Sleep(second * 1000);
-
-	p(&second, &number);
-}
-
-//コールバック関数
-void DispResult(int* second, int* number) {
-	//ランダム
-	srand(time(nullptr));
-
-	printf("3秒待って実行されたよ\n");
-
-	int getRand = rand();
-
-	getRand = getRand % 2;
-	//奇数の場合
-	if (*number == 1) {
-		if (getRand % 2 == 1) {
-			printf("アタリ\n%dが抽選で選ばれました\n", getRand);
-		}
-		else {
-			printf("ハズレ\n%dが抽選で選ばれました\n", getRand);
-		}
-	}
-
-	//偶数の場合
-	else if (*number == 2) {
-		if (getRand % 2 == 0) {
-			printf("アタリ\n%dが抽選で選ばれました\n", getRand);
-		}
-		else {
-			printf("ハズレ\n%dが抽選で選ばれました\n", getRand);
-		}
-	}
-}
+#include<functional>
 
 int main() {
+
+	//ランダム
+	srand(time(nullptr));
+	int getRand = rand() % 6 + 1;
+
+	//時間
+	int second = 3;
 
 	int number = 0;
 	//数字の入力
 	printf("半なら1、丁なら2を入力してください\n");
 	scanf_s("%d", &number);
 
-	PFunc p;
+	//サイコロの抽選
+	std::function<void(int)>Diceroll = [=](int getRand) {
 
-	p = DispResult;
+		//奇数の場合
+		if (number == 1) {
+			if (getRand % 2 == 1) {
+				printf("アタリ\n%dが抽選で選ばれました\n", getRand);
+			}
+			else {
+				printf("ハズレ\n%dが抽選で選ばれました", getRand);
+			}
+		}
 
-	setTimerout(p, 3, number);
+		//偶数の場合
+		else if (number == 2) {
+			if (getRand % 2 == 0) {
+				printf("アタリ\n%dが抽選で選ばれました\n", getRand);
+			}
+			else {
+				printf("ハズレ\n%dが抽選で選ばれました", getRand);
+			}
+		}
+		return 0;
+	};
 
-	system("pause");
+	//3秒待つ
+	std::function<void(int, std::function<void(int)>)>SetTimeout = [=](int second, std::function<void(int)> Diceroll)
+	{
+		Sleep(second * 1000);
+
+		Diceroll(getRand);
+	};
+
+	SetTimeout(second, Diceroll);
+
 	return 0;
 }
-
