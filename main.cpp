@@ -1,58 +1,81 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include<windows.h>
-#include <time.h>
-#include<functional>
+#include <windows.h>
+#include <iostream>
+#include <list>
 
-int main() {
+int main(void) {
 
-	//ランダム
-	srand(time(nullptr));
-	int getRand = rand() % 6 + 1;
-
-	//時間
-	int second = 3;
-
-	int number = 0;
-	//数字の入力
-	printf("半なら1、丁なら2を入力してください\n");
-	scanf_s("%d", &number);
-
-	//サイコロの抽選
-	std::function<void(int)>Diceroll = [=](int getRand) {
-
-		//奇数の場合
-		if (number == 1) {
-			if (getRand % 2 == 1) {
-				printf("アタリ\n%dが抽選で選ばれました\n", getRand);
-			}
-			else {
-				printf("ハズレ\n%dが抽選で選ばれました", getRand);
-			}
-		}
-
-		//偶数の場合
-		else if (number == 2) {
-			if (getRand % 2 == 0) {
-				printf("アタリ\n%dが抽選で選ばれました\n", getRand);
-			}
-			else {
-				printf("ハズレ\n%dが抽選で選ばれました", getRand);
-			}
-		}
-		return 0;
+	// 山手線駅名 
+	std::list<const char*> yamanoteLine = {
+		"Tokyo",
+		"Kanda",
+		"Akihabara",
+		"Okachimachi",
+		"Ueno",
+		"Uguisudani",
+		"Nippori",
+		"Tabara",
+		"Komagome",
+		"Sugamo",
+		"Otsuka",
+		"Ikebukuro",
+		"Mejiro",
+		"Takadanobaba",
+		"Shin-Okubo",
+		"Shinjuku",
+		"Yoyogi",
+		"Harajuku",
+		"Shibuya",
+		"Ebisu",
+		"Meguro",
+		"Gotanda",
+		"Osaki",
+		"Shinagawa",
+		"Tamachi",
+		"Hamamatsutyo",
+		"Shinbashi",
+		"Yurakutyo"
 	};
 
-	//3秒待つ
-	std::function<void(int, std::function<void(int)>)>SetTimeout = [=](int second, std::function<void(int)> Diceroll)
-	{
-		Sleep(second * 1000);
 
-		Diceroll(getRand);
-	};
+	// 山手線1970年の駅名
+	printf("-----1970年-----\n");
+	for (std::list<const char*>::iterator itr = yamanoteLine.begin(); itr != yamanoteLine.end(); ++itr) {
+		std::cout << *itr << "\n";
+	}
 
-	SetTimeout(second, Diceroll);
+	// 西日暮里駅を挿入
+	for (std::list<const char*>::iterator itr = yamanoteLine.begin(); itr != yamanoteLine.end(); ++itr) {
+		if (*itr == "Tabara") {
+			itr = yamanoteLine.insert(itr, "Nishi-Nippori");
+			++itr;
+		}
+	}
 
-	system("pause");
+	// 山手線2019年の駅名
+	printf("\n-----2019年-----\n");
+	for (std::list<const char*>::iterator itr = yamanoteLine.begin(); itr != yamanoteLine.end(); ++itr) {
+		std::cout << *itr << "\n";
+	}
+
+	// 高輪ゲートウェイ駅を挿入
+	for (std::list<const char*>::iterator itr = yamanoteLine.begin(); itr != yamanoteLine.end(); ++itr) {
+		if (*itr == "Tamachi") {
+			itr = yamanoteLine.insert(itr, "Takanawa Gateway");
+			++itr;
+		}
+	}
+
+	// 山手線2022年の駅名
+	printf("\n-----2022年-----\n");
+	for (std::list<const char*>::iterator itr = yamanoteLine.begin(); itr != yamanoteLine.end(); ++itr) {
+
+		std::cout << *itr << "\n";
+	}
+
+	system("Pause");
+
 	return 0;
 }
+
