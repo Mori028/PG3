@@ -53,5 +53,6 @@ int main() {
 
 	SetTimeout(second, Diceroll);
 
+	system("pause");
 	return 0;
 }
