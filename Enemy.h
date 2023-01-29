@@ -1,9 +1,20 @@
 #pragma once
 class Enemy
 {
-public:
-	static int enemyCount;
+public://メンバ関数
+	//近接
+	void Attack();
+	//射撃
+	void Shot();
+	//離脱
+	void Leave();
+	//更新
+	void Update();
 
-	Enemy() { enemyCount++; }
-	~Enemy() { enemyCount--; }
+public://メンバ変数
+	int phase = 0;
+
+private://メンバ関数ポインタ
+	static void(Enemy::* Phase[])();
+
 };
