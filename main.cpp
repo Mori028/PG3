@@ -1,31 +1,19 @@
-#include<stdio.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 #include<windows.h>
-#include<stdlib.h>
-#include<time.h>
-#include"SceneManager.h"
+#include<functional>
+#include"Enemy.h"
+
+int Enemy::enemyCount = 0;
 
 int main() {
-	//インスタンスを取得してすぐ使用
-	SceneManager* sceneManager = SceneManager::GetInstance();
+	Enemy* enemy1 = new Enemy();
+	Enemy* enemy2 = new Enemy();
+	Enemy* enemy3 = new Enemy();
+	
+	//ここに処理をいれる
 
-	int change = 0;
-
-	while (true) {
-
-		sceneManager->ChangeScene(change);
-
-		if (change >= 4) {
-
-			change = 0;
-		}
-		else {
-
-			change++;
-		}
-
-		Sleep(1 * 1000);
-
-	}
 
 	system("pause");
 	return 0;
