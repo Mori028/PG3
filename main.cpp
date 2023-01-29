@@ -12,8 +12,27 @@ int main() {
 	Enemy* enemy2 = new Enemy();
 	Enemy* enemy3 = new Enemy();
 	
-	//‚±‚±‚Éˆ—‚ğ‚¢‚ê‚é
+	int number = 0;
 
+	printf("“G‚Ì”:%d‘Ì\n", Enemy::enemyCount);
+
+	printf("‚È‚É‚©ƒL[‚ğ‰Ÿ‚µ‚Ä‚­‚¾‚³‚¢\n");
+
+	scanf_s("%d", &number);
+
+	if (number == 1) {
+		delete enemy1;
+		delete enemy2;
+		delete enemy3;
+	}
+
+	else {
+		delete enemy1;
+		delete enemy2;
+		delete enemy3;
+	}
+
+	printf("“G‚Ì”:%d‘Ì", Enemy::enemyCount);
 
 	system("pause");
 	return 0;
