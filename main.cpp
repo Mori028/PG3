@@ -7,16 +7,14 @@
 
 int main() {
 	Enemy* enemy = new Enemy();
-	int number = 0;
+	int num = 0;
 
 	while (true) {
-		printf("0~2‚Ì”š‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢");
-		scanf_s("%d", &number);
-		enemy->phase = number;
+		printf("0:Ú‹ß,1:UŒ‚,2:—£’E,012‚Ì‚Ç‚ê‚©‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢\n");
+		scanf_s("%d", &num);
+		enemy->phase = num;
 		enemy->Update();
 	}
-
-
 	system("pause");
 	return 0;
 }
